@@ -1,0 +1,193 @@
+
+1. Write an application that accepts two numbers, divides the first number with the second number and display the result. Hint: You need to handle a ArithmeticException which is thrown when there is an attempt to divide a number by zero.
+
+import java.util.Scanner;
+public class Dividebyzero
+{
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter a number:");
+		int a=sc.nextInt();
+		System.out.println("Enter b number:");
+		int b=sc.nextInt();
+		for(int chance=4;chance>=1;chance--)
+		{
+			 try
+		     {
+			     
+			     System.out.println(a/b);
+			     System.out.println("Division is successful");
+	       	    }
+		    catch(ArithmeticException e)
+		    {
+		    	if(chance==1)
+		    	{
+			        System.out.println("Division is unscussfull, forcefully program is terminated");
+		         }
+			    else
+			    {
+			    	System.out.println("Denominator cannot be zero");
+			    	System.out.println("You have "+(chance-1)+" attempts left");
+			    	System.out.println("Re-enter the denominator");
+			    	b=sc.nextInt();
+			    }
+				 
+			 }
+		}
+		
+}}
+
+OUTPUT:
+Enter a number:
+5
+Enter b number:
+10
+0
+Division is successful
+0
+Division is successful
+0
+Division is successful
+0
+Division is successful
+-----------------------------------------------------
+
+2. Carrying forward with the above problem, handle ArithmeticException by raising UnsupportedOperationException as a solution.
+
+import java.util.*;
+public class arithmatic {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int a =sc.nextInt();
+        int b=sc.nextInt();
+        try {
+            System.out.println(a / b); 
+        }
+        catch (ArithmeticException e) 
+       {
+            System.out.println("Divided by zero");
+            System.out.println(e);
+        }
+		
+	}
+}
+Output:
+15
+3
+5
+-----------------------------------------------
+3. Write an application to perform withdraw functionality on a SavingAccount object. Point to note:
+
+a. Raise InsufficientBalanceException if you are trying to withdraw more than balance or when you balance is zero. E.g if you balance is 2000 and if are trying to withdraw 2100 or if you balance is 0 and you are trying to withdraw positive value.
+
+import java.util.Scanner;
+class InsufficientBalanceException extends RuntimeException
+{
+	
+}
+public class SavingAccount
+{
+	Scanner sc  = new Scanner(System.in);
+	public void withdrawal(double a)
+	{	
+		System.out.println("Enter your Id: ");
+		long id = sc.nextLong();
+		System.out.println("Enter your balance: ");
+		double b = sc.nextDouble();
+		try
+		{
+			if(a<=b) 
+			{
+				b = b-a;
+				System.out.println("Balance= " + b);
+				
+			}
+			else 
+			{
+				throw new InsufficientBalanceException();
+			}
+			
+		}
+		catch (InsufficientBalanceException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public static void main(String[] args)
+	{
+		SavingAccount s = new SavingAccount();
+		s.withdrawal(2000);
+	}
+}
+
+
+OUTPUT:
+Enter your Id:
+2026
+Enter your balance:
+1000
+InsufficientBalanceException
+        at SavingAccount.withdrawal(SavingAccount.java:25)
+        at SavingAccount.main(SavingAccount.java:37)
+---------------------------------
+
+b. Raise IllegalBankTransactionException if you are trying to  withdraw a negative value from your balance. E.g. if you try to withdraw a negative value savingACC withdraw(-1000);
+Note: SavingAccount
+	|-long  id
+	|-double balance
+	|-double withdraw(double amount)
+	|-double deposite(double amount) 
+
+
+import java.util.Scanner;
+class IllegalBankTransactionException extends RuntimeException
+{
+}
+public class SavAccount
+ {
+	
+	Scanner sc  = new Scanner(System.in);
+	public void withdrawal(double a)
+	{
+		System.out.println("Enter your Id ");
+		long id = sc.nextLong();
+		System.out.println("Enter your balance ");
+		double b = sc.nextDouble();
+		try {
+			if(a>0) 
+{
+				System.out.println("Balance= " + b);
+				
+			}
+			else 
+{
+				throw new IllegalBankTransactionException();
+			}
+			
+		}
+		catch (IllegalBankTransactionException e)
+ {
+			e.printStackTrace();
+		}
+	}
+	public static void main(String[] args) 
+{
+		
+		SavsAccount s = new SavsAccount();
+		s.withdrawal(-10201);
+       }
+}
+
+
+
+OUTPUT:
+
+Enter your Id
+1445
+Enter your balance
+2000
+IllegalBankTransactionException
+        at SavsAccount.withdrawal(SavsAccount.java:23)
+        at SavsAccount.main(SavsAccount.java:36)
