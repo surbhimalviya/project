@@ -1,0 +1,426 @@
+1. Given a TreeMap<Long, Contact> which has phone numbers for keys and contact objects for values.
+
+Write solutions to
+a.	Fetch all the keys and print them,
+b.	Fetch all the values and print them
+c.	Print all key-values pairs 
+
+Note: 
+a)	Contacts should be stored in descending order of phone number 
+b)	Contact class:
+•	PhoneNumber:<long>
+•	Name:<String>
+•	Email:<String>
+•	Gender:<Enum>
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import tree.contact.gender;
+public class Tree{
+	public static void main(String[] args)
+	{
+		Map<Long,Contact> map=new TreeMap<Long,Contact>();
+		Contact c1=new Contact((long)95494567,"om","om@.com",gender.M);
+		Contact c2=new Contact((long)977045679,"pooja","pooja@.com",gender.Fe);
+		Contact c3=new Contact((long)626447478,"riya","riya@.com",gender.Fe);
+		Contact c4=new Contact((long)788947579,"surbhi","surbhi@.com",gender.Fe);
+		map.put((long)89034567, c1);
+		map.put((long)12345679, c2);
+		map.put((long)67864747, c3);
+		map.put((long)45754757, c4);
+		 for(Map.Entry<Long, Contact> entry:map.entrySet()){  
+			 Long key=entry.getKey();  
+		        Contact c=entry.getValue();  
+		        System.out.println(key+" Details:");  
+		        System.out.println(c.phoneno+" "+c.name+" "+c.email+" "+c.gen);  
+		 }
+		 System.out.println("After Sorted:");
+		        Map<Long,Contact> sortedMapDesc = new TreeMap<>(
+		                Collections.reverseOrder());
+		        sortedMapDesc.putAll(map);
+		        for(Map.Entry<Long,Contact> entry1 : sortedMapDesc.entrySet())
+		        {
+		        	 Long key=entry1.getKey();  
+				        Contact c8=entry1.getValue();  
+				        System.out.println(key+" Details:");
+		        System.out.println(c8.phoneno+" "+c8.name+" "+c8.email+" "+c8.gen);  
+		        }     
+		    
+	}
+}
+import java.util.EnumSet;
+
+public class Contact {
+	long phoneno;
+	String name,email;
+	public enum gender {Fe,m}
+	gender gen;
+	public Contact(long phoneno, String name, String email, gender gen) {
+		super();
+		this.phoneno = phoneno;
+		this.name = name;
+		this.email = email;
+		this.gen = gen;
+	}
+	public long getPhoneno() {
+		return phoneno;
+	}
+	public void setPhoneno(long phoneno) {
+		this.phoneno = phoneno;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public gender getG() {
+		return gen;
+	}
+	public void setG(gender gen) {
+		this.gen = gen;
+	}
+}
+
+------------------------------------------------------------------
+2. Write an application to store unique product objects. In case there is an attempt to add  duplicate product, it should be silently rejected. Hint: Use HashSet or TreeSet
+
+Extra(Optional): Use ArrayList in above solution.(This is optional)
+
+public class Duplicate1 implements Comparable<Duplicate1>{
+	private String product_name;
+	private int product_id;
+	
+	Duplicate1(String product_name, int product_id)
+	{
+		this.product_id = product_id;
+		this.product_name = product_name;
+	}
+	
+	private String getName()
+	{
+		return product_name;
+	}
+	
+	public int getId()
+	{
+		return product_id;
+	}
+	
+	public int compareTo(Duplicate1 f)
+	{
+		if(product_id == f.getId())
+		{
+			return 0;
+		}
+		else if(product_name.compareTo(f.getName()) < 0)
+		{
+			return -1;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	
+	public String toString()
+	{
+		return product_name + " - " + product_id;
+	}
+	
+}
+
+import java.util.TreeSet;
+
+public class Duplicate {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		TreeSet<Duplicate1> dup = new TreeSet<>();
+		
+		dup.add(new Duplicate1("Redmi",1));
+		dup.add(new Duplicate1("airtel",2));
+		dup.add(new Duplicate1("jio",3));
+		dup.add(new Duplicate1("vodaphone",4));
+		dup.add(new Duplicate1("jio",2));
+		dup.add(new Duplicate1("Redmi",5));
+		
+		for(Duplicate1 f : dup)
+		{
+			System.out.println(f);
+		}
+
+	}
+
+}
+
+Output:
+Redmi - 5
+vodaphone - 4
+jio - 3
+airtel - 2
+Redmi - 1
+--------------------------------------------------------------------------------
+3. Store atleast 10 Employee Objects in an TreeSet<Employee>. When the application runs the user should be asked to select one of the options upon which you all print the employee details in a sorted manner.
+
+For E.g.,
+
+Run Application:
+a)	ID
+b)	Name
+c)	Department
+d)	Salary
+
+	public class Emp1 {
+	private int id;
+	private String name;
+	private String dept;
+	private double sal;
+	public Emp1(int id, String name, String dept, double sal) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.dept = dept;
+		this.sal = sal;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDept() {
+		return dept;
+	}
+	public void setDept(String dept) {
+		this.dept = dept;
+	}
+	public double getSal() {
+		return sal;
+	}
+	public void setSal(double sal) {
+		this.sal = sal;
+	}
+	
+	
+}
+
+import java.util.Comparator;
+public class IdCompare implements Comparator<Emp1>{
+	public int compare(Emp1 o1, Emp1 o2)
+	{
+		return o1.getId() - o2.getId();
+	}
+}
+
+import java.util.Comparator;
+public class NCompare implements Comparator<Emp1>{
+	public int compare(Emp1 o1, Emp1 o2)
+	{
+		return o1.getName().compareTo(o2.getName());
+	}
+}
+
+import java.util.Comparator;
+public class DCompare implements Comparator<Emp1>{
+	public int compare(Emp1 o1, Emp1 o2)
+	{
+		return o1.getDept().compareTo(o2.getDept());
+	}
+}
+
+import java.util.Comparator;
+public class SCompare implements Comparator<Emp1>{
+	public int compare(Emp1 o1, Emp1 o2)
+	{
+		return o1.getDept().compareTo(o2.getDept());
+	}
+}
+
+import java.util.*;
+import java.util.TreeSet;
+public class Compare {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		System.out.println("You want to sort in order of \n\n1.ID\n2.Department\n3.Name\n4.Salary\n\nEnter your option: ");
+		int option = sc.nextInt();
+		
+		switch(option)
+		{
+		case 1:
+			TreeSet<Emp1> tset = new TreeSet<Emp1>(new IdCompare());
+			
+			tset.add(new Emp1(1,"Analyst","Surbhi",21000.0));
+			tset.add(new Emp1(2,"Analyst","Nisha",21000.0));
+			tset.add(new Emp1(3,"Analyst","Pooja",21000.0));
+			
+			System.out.println(" Increasing Order with the Id : ");
+			
+			for(Emp1 o : tset)
+			{
+				
+				System.out.print(o.getId()+","+o.getDept()+","+o.getName()+","+o.getSal());
+				System.out.println();
+			}
+			
+			break;
+			
+		case 2:
+			TreeSet<Emp1> tset1 = new TreeSet<Emp1>(new NCompare());
+			
+			tset1.add(new Emp1(1,"Analyst","Surbhi",21000.0));
+			tset1.add(new Emp1(2,"Analyst","Nisha",21000.0));
+			tset1.add(new Emp1(3,"Analyst","Pooja",21000.0));
+			
+			System.out.println(" Increasing Order with the Name : ");
+			
+			for(Emp1 o : tset1)
+			{
+				System.out.print(o.getId()+","+o.getDept()+","+o.getName()+","+o.getSal());
+				System.out.println();
+			}
+			
+			break;
+		
+	
+	
+	case 3:
+			TreeSet<Emp1> tset2 = new TreeSet<Emp1>(new DCompare());
+			
+			tset2.add(new Emp1(1,"Analyst","Surbhi",21000.0));
+			tset2.add(new Emp1(2,"Analyst","Nisha",21000.0));
+			tset2.add(new Emp1(3,"Analyst","Pooja",21000.0));
+			
+			System.out.println(" Increasing Order with the Department : ");
+			
+			for(Emp1 o : tset2)
+			{
+				System.out.print(o.getId()+","+o.getDept()+","+o.getName()+","+o.getSal());
+				System.out.println();
+			}
+			
+			break;
+		
+		case 4:
+			TreeSet<Emp1> tset3 = new TreeSet<Emp1>(new SCompare());
+			
+			tset3.add(new Emp1(1,"Analyst","Surbhi",21000.0));
+			tset3.add(new Emp1(2,"Analyst","Nisha",21000.0));
+			tset3.add(new Emp1(3,"Analyst","Pooja",21000.0));
+			
+			System.out.println(" Increasing Order with the Salary : ");
+			
+			for(Emp1 o : tset3)
+			{
+				System.out.print(o.getId()+","+o.getDept()+","+o.getName()+","+o.getSal());
+				System.out.println();
+			}
+			
+			break;
+		
+		}
+		
+		
+	}
+
+}
+
+Output: You want to sort in order of 
+
+1.ID
+2.Department
+3.Name
+4.Salary
+
+Enter your option: 
+2
+ Increasing Order with the Name : 
+3,Pooja,Analyst,21000.0
+2,Nisha,Analyst,21000.0
+1,Surbhi,Analyst,21000.0
+			
+You want to sort in order of 
+
+1.ID
+2.Department
+3.Name
+4.Salary
+
+Enter your option: 
+3
+ Increasing Order with the Department : 
+2,Nisha,Analyst,21000.0
+1,Surbhi,Analyst,21000.0
+3,Pooja,Analyst,21000.0
+--------------------------------------------------------------
+4. Given a LinkedList of Objects representing date of birth’s (use any inbuild java class to represent date), print the date’s along with the message: Your date of Birth is DD-MM-YYYY and it (was or was not) a leap year.
+E.g.,
+a)  For the date 23-12-2000 and it was a leap year.
+b) For the date 23-12-2001
+
+Your date of birth 23-12-2001  and it was not a leap year
+
+import java.util.*;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+
+
+public class Leapyear {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		LocalDate d1 = LocalDate.of(1997, 8, 21);
+		LocalDate d2 = LocalDate.of(1997, 1, 20);
+		LocalDate d3 = LocalDate.of(2000, 5, 15);
+		LocalDate d4 = LocalDate.of(2004, 12, 19);
+		
+		LinkedList<LocalDate> list = new LinkedList<LocalDate>();
+		
+		list.add(d1);
+		list.add(d2);
+		list.add(d3);
+		list.add(d4);
+		
+		for(LocalDate l : list)
+		{
+			String Date = l.format(DateTimeFormatter.ofPattern("dd-MM-YYYY"));
+			
+			if(l.isLeapYear())
+			{
+				System.out.println("Your Date of Birth " );
+				System.out.println(  Date + " and it was a leap year");
+			}
+			else
+			{
+				System.out.println("Your Date of Birth ");
+				System.out.println( Date + " and it was not a leap year");
+			}
+		}
+		
+	}}
+
+Output:
+Your Date of Birth
+21-08-1997 and it was not a leap year
+Your Date of Birth
+20-01-1997 and it was not a leap year
+Your Date of Birth
+15-05-2000 and it was a leap year
+Your Date of Birth
+19-12-2004 and it was a leap year
