@@ -1,0 +1,332 @@
+1. Write a program to calculate the simple Interest with minimal code using features of Java 11.
+HINT: Use the concept of functional interface and Local variable syntax for lambda parameters.
+
+import java.util.Scanner;
+
+public class SimpleInterest
+{
+
+	public static void main(String[] args)
+	{		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter Amount value: ");
+		int amt = sc.nextInt();
+		System.out.println("Enter Rate value:" );
+		int rate = sc.nextInt();
+		System.out.println("Enter Time value: ");
+		int time = sc.nextInt();
+		
+		Interest inter = (int a, int b, int c) -> (a*b*c)/100;
+		
+		int result = inter.calculate(amt, rate, time);
+		System.out.println("Simple Interest is: "+result);
+	}
+}
+interface Interest
+{	
+	int calculate(int amt, int rate, int time);
+}
+
+OUTPUT:-
+Enter Amount value: 
+20000
+Enter Rate value:
+8
+Enter Time value: 
+3
+Simple Interest is: 48000 
+------------------------------------------------------------------------------
+
+2. Java 11 supports var keyword for variable declarations. List the scenarios where var keyword cannot be used for such variable declarations. Give reason in support of your answer for each scenario.
+Scenario 1: var cannot be used in an instance and global variable declaration.
+
+class Ex1 {
+    var a = 1206;
+    public static void main(String[] args)
+    {
+        System.out.println(a);
+    }
+}
+
+Output:-
+prog.java:8: error: 'var' is not allowed here
+    var a = 1206;
+    ^
+1 error
+
+Scenario 2: var cannot be used as a Generic type.
+import java.util.*;
+class Ex2 {
+    public static void main(String[] args)
+    {
+        var<var> al = new ArrayList<>();
+            
+        al.add(12);
+        al.add(60);
+        al.add(99);
+        
+        System.out.println(al);
+    }
+}
+
+Output:-
+prog.java:10: error: 'var' is not allowed here
+        var<var> al = new ArrayList<>();
+            ^
+1 error
+
+Scenario 3: var cannot be used with lambda expression
+
+package java11;
+interface myInt {
+	int add(int a, int b);
+}
+class demo4 {
+	public static void main(String[] args) {
+		var v = (a,b) -> (a + b);
+		System.out.println(v.add(2,3));
+	}
+}
+
+OUTPUT: 
+Lambda expression needs an explicit target-type
+	Cannot invoke add(int, int) on the primitive type null
+
+Scenario 4: var cannot be used without explicit initialization
+package java11;
+import java.io.*;
+class demo3 {
+	
+	public static void main(String[] args) {
+	
+		 // declaration without
+        // initialization
+        var variable;
+          
+          // This is also not valid
+        var variable = null;
+	}
+
+}
+
+OUTPUT:
+Cannot use 'var' on variable without initializer
+	Duplicate local variable variable
+	Cannot infer type for local variable initialized to 'null'
+
+----------------------------------------------------------------------------------------------	
+3. A quick brown fox jumps over the lazy dog”. Create an ArrayList from the given String .Such an ArrayList should include each word from the given sentence. Finally. convert such List to an array using Java 11 methods and print the output.
+
+package java11;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class String1{
+	public static void main(String[] args) 
+	{
+		String str = "A quick brown fox jumps over the lazy dog";
+		String words[] = str.split(" ");
+		
+		List<String> l = new ArrayList<String>();
+		for(String text:words) {
+	         l.add(text);
+		}
+		System.out.println(l);
+		//java11 
+		String[] array = l.toArray(String[]::new);
+		System.out.println("In java 11 features : " + Arrays.toString(array));
+	}
+}
+
+OUTPUT:
+[A, quick, brown, fox, jumps, over, the, lazy, dog]
+      In java 11 features: [A, quick, brown, fox, jumps, over, the, lazy, dog]
+----------------------------------------------------------------------------------
+
+4. Using features of Java 11, read the data from a text file (File name: StudentList.bt). Calculate the count of students and print the names as well as the total count of students on the screen. (If any line in file doesn't contain a name, for such a record blank space should not be printed in the output)
+Hint: Use java 11 features of files and String methods to reduce the lines of code to be written.	
+
+package java11;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+public class File
+{	
+		public static void main(String[] args)
+		{
+			Path filePath = Paths.get("C:/","Users","Surbhi","Documents","StudentList.txt");
+			
+			try
+			{
+				String line;
+				int count =0;
+				
+				String content = Files.readString(filePath);
+				System.out.println(content);
+				String words[] = content.split(" ");
+				count = count + words.length;
+
+				System.out.println("Total Name Count: " + count);
+         		}
+			catch (IOException o)
+			{
+				o.printStackTrace();
+			}
+		}
+	}
+
+
+OUTPUT:
+
+Surbhi Richa Neha Sakshi Shivani
+Total Name Count : 5
+-----------------------------------------------------------------------------------------
+
+5.Write a program with the menu to accept the price of certain items and display their total. When user selects Option 1: should accept the prices of different products and insert these prices into first file (each amount to be inserted in a newline in the file). Next total of these values should be saved in a new file. Option 2: should allow the user to view the total of these prices from the second file.
+Select your option (1: Insert New Price, 2: View Purchase Total, 3: Exit)
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.Scanner;
+
+public class Writetofile {
+
+	public static void main(String[] args) {
+		
+		var firstfile = "C:\\Users\\surbhi\\price.txt";
+		var secondfile = "C:\\Users\\surbhi\\total.txt";
+		int val =1,pr,total=0;
+		String c="Yes";
+		try {
+		Scanner sc = new Scanner(System.in); 
+		 char ch;
+		    do {  
+	            System.out.println("\n **CHOICES** ");  
+	            System.out.println("1.Insert 1st price:\nb.View purchase Total \nc.Exit ");  
+	            System.out.println("Select your option:");  
+	            ch = sc.next().charAt(0);  
+	                switch (ch) {  
+	                    case 'a': do {
+	                    	if(c.equals("Yes")) {
+	                    	System.out.println("\nInsert "+val+" item price");
+	                    	pr=sc.nextInt();
+	                    	total=total+pr;
+	                    	Files.writeString(Path.of(firstfile), String.valueOf(pr),StandardOpenOption.APPEND);
+	                    	System.out.println("Price has been saved to the file");
+	                    	System.out.println("Do u want to enter price for more items?(Yes/No)");
+	                    	c=sc.next();
+	                    	val=val+1;
+	                    	}else {
+	                    		break;
+	                    	}
+	                    }while(c!="Yes");
+	                    break;
+	                    case 'b':
+	                    	Files.writeString(Path.of(secondfile), String.valueOf(total),StandardOpenOption.APPEND);
+	                    	String totprice = Files.readString(Path.of(secondfile));
+	                    	System.out.println(totprice);
+	                    	break;
+	                    case 'c':
+	                    	System.out.println("Exit Program.............");
+	                }
+       	        } while (ch != (int)'c');  
+	                    	
+		
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+}
+
+Output:-
+**CHOICES**
+1.Insert 1st price: 
+2.View purchase Total 
+3.Exit
+Select your option: 
+1
+Insert 1st price:
+100
+Price has been saved to the file
+Do u want to enter price for more items?(Yes/No)
+Yes
+Insert 2 item price
+200
+Price has been saved to the file
+Do u want to enter price for more items?(Yes/No)
+No
+
+**CHOICES**
+1.Insert 1st price: 
+2.View purchase Total 
+3.Exit
+Select your option: 
+2
+Total price of all items is :300
+
+**CHOICES**
+1.Insert 1st price: 
+2.View purchase Total 
+3.Exit
+Select your option: 
+3
+Exit Program.............
+------------------------------------------------------------------------------------------
+
+6. Write a code using HttpClient API which sends a GET request to https://httpbin.org/get, and print out the response header, status code, and body for the given URL Sample output could be (Note: date and other attribute values may differ in your case.
+
+package java11;
+	import java.io.IOException;
+	import java.net.URI;
+	import java.net.http.HttpClient;
+	import java.net.http.HttpRequest;
+	import java.net.http.HttpResponse;
+	import java.net.http.HttpClient.Version;
+	import java.net.http.HttpResponse.BodyHandlers;
+
+	public class URLDemo {
+		public static void main(String[] args) { 
+			String uri = "https://httpbin.org/get";
+			
+			HttpRequest req = HttpRequest.newBuilder()
+					.uri(URI.create(uri))
+					.GET()
+					.version(Version.HTTP_2)
+					.build();
+			
+			HttpClient client = HttpClient.newBuilder()
+					.build();
+			
+			try
+			{
+				HttpResponse<String> resp = client.send(req, BodyHandlers.ofString());
+				System.out.println(resp.headers());
+				System.out.println(resp.statusCode());
+				System.out.println(resp.body());
+			}
+			catch(IOException | InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+OUTPUT:
+java.net.http.HttpHeaders@ae0d7a0b { {:status=[200], access-control-allow-credentials=[true], access-control-allow-origin=[*], content-length=[245], content-type=[application/json], date=[Thu, 20 Jan 2022 14:57:38 GMT], server=[gunicorn/19.9.0]} }
+200		
+{
+  "args": {}, 
+  "headers": {
+    "Host": "httpbin.org", 
+    "User-Agent": "Java-http-client/17.0.1", 
+    "X-Amzn-Trace-Id": "Root=1-61e98f65-1bb67bb8330e2bb7256a7970"
+  }, 
+  "origin": "43.252.205.45", 
+  "url": "https://httpbin.org/get"
+}
